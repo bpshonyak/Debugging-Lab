@@ -13,8 +13,7 @@ public class Timesheet {
     private int SATURDAY = 6;
     private int SUNDAY = 0;
 
-    private int[] week_hours = new int[7];
-
+    private Day[] week = new Day[7];
 
     /**
      * Default constructor
@@ -40,7 +39,10 @@ public class Timesheet {
             throw new InvalidParameterException("The week_hours array passed in must have exactly 7 indices");
         }
 
-        this.week_hours = week_hours;
+        for(int i = 0; i < week.length; i++){
+            week[i] = new Day(i);
+            week[i].setHours(week_hours[i]);
+        }
     }
 
     /**
@@ -53,7 +55,7 @@ public class Timesheet {
             throw new InvalidParameterException("The day value must be between 1-6 inclusive.");
         }
 
-        week_hours[day] = hours;
+        week[day].hours = hours;
     }
 
     /**
@@ -68,17 +70,17 @@ public class Timesheet {
         double totalPay = 0.0;
 
         //Saturday and Sunday have special bonuses
-        int sundayHours = week_hours[SUNDAY];
-        int saturdayHours = week_hours[SATURDAY];
+        int sundayHours = week[SUNDAY].getHours();
+        int saturdayHours = week[SATURDAY].getHours();
 
-        for (int i = 0; i < week_hours.length; i++) {
+        for (int i = 0; i < week.length; i++) {
 
             //Add to overtime hours
-            if(week_hours[i] > 8){
-                overtimeHours += week_hours[i] - 8;
+            if(week[i].hours > 8){
+                overtimeHours += week[i].getHours() - 8;
             }
 
-            totalHours += week_hours[i];
+            totalHours += week[i].getHours();
         }
 
         //Calculate payment --------------------------------------------------------------------------------
@@ -126,6 +128,57 @@ public class Timesheet {
         sundayBonus += (sundayHours - 8) > 0 ? (sundayHours - 8) * 2 : 0;
 
         return sundayBonus;
+    }
+
+    /**
+     * Day class
+     */
+    class Day {
+
+        private int day;
+        private int hours = 0;
+        private int dailyOvertimeHours = 0;
+        private int weeklyOvertimeHours;
+
+        //Constructor
+
+        public Day(int day){
+            this.day = day;
+        }
+
+        // Getters & Setters
+
+        public int getDay() {
+            return day;
+        }
+
+        public void setDay(int day) {
+            this.day = day;
+        }
+
+        public int getHours() {
+            return hours;
+        }
+
+        public void setHours(int hours) {
+            this.hours = hours;
+        }
+
+        public int getDailyOvertimeHours() {
+            return dailyOvertimeHours;
+        }
+
+        public void setDailyOvertimeHours(int dailyOvertimeHours) {
+            this.dailyOvertimeHours = dailyOvertimeHours;
+        }
+
+        public int getWeeklyOvertimeHours() {
+            return weeklyOvertimeHours;
+        }
+
+        public void setWeeklyOvertimeHours(int hoursOver40) {
+            this.weeklyOvertimeHours = hoursOver40;
+        }
     }
 
 
