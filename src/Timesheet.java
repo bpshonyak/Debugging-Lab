@@ -69,15 +69,21 @@ public class Timesheet {
 
         double totalPay = 0.0;
 
-        //Saturday and Sunday have special bonuses
-        int sundayHours = week[SUNDAY].getHours();
-        int saturdayHours = week[SATURDAY].getHours();
-
         for (int i = 0; i < week.length; i++) {
 
-            //Add to overtime hours
+            //Add daily overtime hours
             if(week[i].hours > 8){
+                week[i].dailyOvertimeHours += week[i].getHours() - 8;
                 overtimeHours += week[i].getHours() - 8;
+            }
+
+            //Add weekly overtime hours
+            if(totalHours > 40){
+                week[i].weeklyOvertimeHours = week[i].getHours();
+            }else if(totalHours + week[i].getHours() > 40){
+                int excess = totalHours + week[i].getHours();
+                int overHours = excess - 40;
+                week[i].weeklyOvertimeHours = overHours;
             }
 
             totalHours += week[i].getHours();
@@ -85,28 +91,21 @@ public class Timesheet {
 
         //Calculate payment --------------------------------------------------------------------------------
 
-        //Regular pay
+        //Calculate Regular pay
         totalPay += (totalHours * PAY_GRADE);
 
-        //Overtime
+        //Add Overtime Pay
         totalPay += overtimeHours * 2;
 
-        //Sundays and Saturdays bonus calculations ------------------------------
-
-        double saturdayBonus = calculateSaturdayBonus(saturdayHours);
-
-        double sundayBonus = calculateSundayBonus(sundayHours);
 
         //Add $4 per additional hour if totalHours exceeds 40
         if(totalHours > 40){
-            totalPay += overtimeHours * 4; // overtime
-
-            sundayBonus += (sundayHours - 8) > 0 ? (sundayHours - 8) * 4 : 0;
-            saturdayBonus += (saturdayHours - 8) > 0 ? (saturdayHours - 8) * 4 : 0;
+            totalPay += (totalHours - 40) * 4; // overtime
         }
 
-        totalPay += sundayBonus / 2;
-        totalPay += saturdayBonus;
+        //Calculate bonuses
+        totalPay += calculateSaturdayBonus();
+        totalPay += calculateSundayBonus();
 
         return totalPay;
     }
@@ -114,18 +113,24 @@ public class Timesheet {
 
     //Private helper methods -------------------------------------------------------------------------------
 
-    private double calculateSaturdayBonus(int saturdayHours){
+    private double calculateSaturdayBonus(){
 
-        double saturdayBonus = (saturdayHours * PAY_GRADE);
-        saturdayBonus += (saturdayHours - 8) > 0 ? (saturdayHours - 8) * 2 : 0;
+        Day saturday = week[SATURDAY];
+        double saturdayBonus;
+
+        saturdayBonus = (saturday.hours * 10) + (saturday.dailyOvertimeHours * 2) + (saturday.weeklyOvertimeHours * 4);
+        saturdayBonus = (saturdayBonus / 100) * SATURDAY_BONUS;
 
         return saturdayBonus;
     }
 
-    private double calculateSundayBonus(int sundayHours){
+    private double calculateSundayBonus(){
 
-        double sundayBonus = (sundayHours * PAY_GRADE);
-        sundayBonus += (sundayHours - 8) > 0 ? (sundayHours - 8) * 2 : 0;
+        Day sunday = week[SUNDAY];
+        double sundayBonus;
+
+        sundayBonus = (sunday.hours * 10) + (sunday.dailyOvertimeHours * 2) + (sunday.weeklyOvertimeHours * 4);
+        sundayBonus = (sundayBonus / 100) * SUNDAY_BONUS;
 
         return sundayBonus;
     }
