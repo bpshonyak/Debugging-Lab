@@ -40,6 +40,11 @@ public class Timesheet {
         }
 
         for(int i = 0; i < week.length; i++){
+
+            if (week_hours[i] < 0 || week_hours[i] > 24) {
+                throw new InvalidParameterException("Invalid work hours.");
+            }
+
             week[i] = new Day(i);
             week[i].setHours(week_hours[i]);
         }
@@ -51,8 +56,13 @@ public class Timesheet {
      * @param hours Hours worked
      */
     public void setDayHours(int day, int hours) {
+
         if (day < 0 || day > 6){
             throw new InvalidParameterException("The day value must be between 1-6 inclusive.");
+        } else if (hours < 0 || hours > 24) {
+            throw new InvalidParameterException("Invalid work hours.");
+        } else if (week[day] == null ){
+            throw new NullPointerException("Day " + day + " has not been set.");
         }
 
         week[day].hours = hours;
@@ -70,6 +80,11 @@ public class Timesheet {
         double totalPay = 0.0;
 
         for (int i = 0; i < week.length; i++) {
+
+            //Check for null day
+            if(week[i] == null){
+                throw new NullPointerException("Day " + i + " has not been set.");
+            }
 
             //Add daily overtime hours
             if(week[i].hours > 8){

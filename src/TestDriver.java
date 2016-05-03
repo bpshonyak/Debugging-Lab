@@ -4,7 +4,11 @@
 public class TestDriver {
     public static void main(String[] args) {
 
-            System.out.println("Testing...");
+        TimesheetTester tester = new TimesheetTester();
+
+        System.out.print(tester.testFirstInput());
+        System.out.print(tester.testSecondInput());
+        System.out.print(tester.testThirdInput());
 
     }
 }
