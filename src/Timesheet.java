@@ -155,19 +155,18 @@ public class Timesheet {
      */
     class Day {
 
+        //Fields
         private int day;
         private int hours = 0;
         private int dailyOvertimeHours = 0;
         private int weeklyOvertimeHours;
 
         //Constructor
-
         public Day(int day){
             this.day = day;
         }
 
         // Getters & Setters
-
         public int getDay() {
             return day;
         }
