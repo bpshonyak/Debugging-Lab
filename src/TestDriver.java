@@ -12,7 +12,6 @@ public class TestDriver {
         String maxHoursPerDayTest = tester.testMaxHoursPerDay()             ? "Passed" : "Failed";
         String negativeHoursPerDayTest = tester.testNegativeHoursPerDay()   ? "Passed" : "Failed";
         String setWeekHoursTest = tester.testSetWeekHours()                 ? "Passed" : "Failed";
-        String calculatePayTest = tester.testCalculatePay()                 ? "Passed" : "Failed";
 
         //Spec Tests
         String firstInputTest = tester.testFirstInput()                     ? "Passed" : "Failed";
@@ -20,7 +19,7 @@ public class TestDriver {
         String thirdInputTest = tester.testThirdInput()                     ? "Passed" : "Failed";
 
 
-
+        //Console output
         System.out.println("----------------------- Timesheet Automated Tests -----------------------");
         System.out.println();
         System.out.println("************** Class Tests **************");
@@ -30,7 +29,6 @@ public class TestDriver {
         System.out.println("Max hours test: \t\t" + maxHoursPerDayTest);
         System.out.println("Negative hours test: \t" + negativeHoursPerDayTest);
         System.out.println("Set week hours test: \t" + setWeekHoursTest);
-        System.out.println("Calculate pay test: \t" + calculatePayTest);
         System.out.println();
         System.out.println("************** Spec Tests ***************");
         System.out.println();

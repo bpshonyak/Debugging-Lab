@@ -10,14 +10,17 @@ public class Overtime {
 
     public static void main(String[] args) throws IOException {
 
-
+        //Retrieve data file
         Scanner file = getFile();
+
+        //Get rows of data count
         int rows = getNumberOfRows(file);
 
+        //Create timesheets
         Timesheet[] timesheets = new Timesheet[rows];
-
         populateTimesheets(timesheets, file);
 
+        //Print calculate pay results
         for (int i = 0; i <timesheets.length; i++){
             double totalPay = timesheets[i].calculatePay();
             System.out.println("Pay for timesheet [" + i + "] = " + totalPay );

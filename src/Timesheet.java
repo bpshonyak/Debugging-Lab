@@ -79,6 +79,7 @@ public class Timesheet {
 
         double totalPay = 0.0;
 
+        //Loop through timesheet
         for (int i = 0; i < week.length; i++) {
 
             //Check for null day
@@ -128,6 +129,11 @@ public class Timesheet {
 
     //Private helper methods -------------------------------------------------------------------------------
 
+
+    /**
+     * Calculates bonus pay for Saturday
+     * @return Bonus pay
+     */
     private double calculateSaturdayBonus(){
 
         Day saturday = week[SATURDAY];
@@ -139,6 +145,10 @@ public class Timesheet {
         return saturdayBonus;
     }
 
+    /**
+     * Calculates bonus pay for Sunday
+     * @return Bonus pay
+     */
     private double calculateSundayBonus(){
 
         Day sunday = week[SUNDAY];
@@ -151,7 +161,7 @@ public class Timesheet {
     }
 
     /**
-     * Day class
+     * Internal class representing a work day
      */
     class Day {
 

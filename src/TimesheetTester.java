@@ -1,5 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.security.InvalidParameterException;
 
 /**
@@ -105,14 +103,6 @@ public class TimesheetTester {
         }
 
         return false;
-    }
-
-    /**
-     * Tests the calculatePay method
-     * @return True if the test passes
-     */
-    public boolean testCalculatePay(){
-        return true;
     }
 
     // Specification tests --------------------------------------------
