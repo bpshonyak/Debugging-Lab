@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * TODO: write up a class description
+ * Driver for Timesheet class
  */
 public class Overtime {
 
